@@ -16,7 +16,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Letharion\\Logging": "lib/"
+            "Letharion\\Logging\\": "lib/"
         }
     }
 }
