@@ -1,0 +1,22 @@
+{
+    "name": "letharion/opportunistic-logger",
+    "description": "Opportunistic logger",
+    "require": {
+        "monolog/monolog": "~1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4"
+    },
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Claes 'Letharion' Gyllensvärd",
+            "email": "letharion@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Letharion\\Logging": "lib/"
+        }
+    }
+}
