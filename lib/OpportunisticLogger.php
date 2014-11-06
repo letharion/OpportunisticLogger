@@ -16,7 +16,7 @@ class OpportunisticLogger implements LoggerInterface {
   protected $fxlogger;
 
   public function __construct($channel, $x = NULL, $facility = 'local0', $level = \Monolog\Logger::NOTICE) {
-    $this->logger = new \Monolog\Logger();
+    $this->logger = new \Monolog\Logger($channel);
     $this->logger->pushHandler(new SyslogHandler($x, 'local0', $level));
 
     $this->fxlogger = new \Monolog\Logger($channel);
