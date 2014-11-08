@@ -14,8 +14,11 @@ class OpportunisticLogger implements LoggerInterface {
 
   protected $logger;
   protected $fxlogger;
+  protected $messages;
 
-  public function __construct($channel, $x = NULL, $facility = 'local0', $level = \Monolog\Logger::NOTICE) {
+  public function __construct($channel, $messages, $x = NULL, $facility = 'local0', $level = \Monolog\Logger::NOTICE) {
+    $this->messages = $messages;
+
     $this->logger = new \Monolog\Logger($channel);
     $this->logger->pushHandler(new SyslogHandler($x, 'local0', $level));
 
@@ -49,8 +52,14 @@ class OpportunisticLogger implements LoggerInterface {
   }
 
   public function log($level, $message, array $context = Array()) {
+    $message_data = $this->messages[$message];
+    $message = str_replace(
+      array('%uuid', '%message'),
+      $message_data,
+      '(%uuid): %message'
+    );
+
     $this->logger->$level($message, $context);
     $this->fxlogger->$level($message, $context);
   }
 }
-
