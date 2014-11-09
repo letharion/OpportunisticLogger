@@ -16,14 +16,14 @@ class OpportunisticLogger implements LoggerInterface {
   protected $fxlogger;
   protected $messages;
 
-  public function __construct($channel, $messages, $x = NULL, $facility = 'local0', $level = \Monolog\Logger::NOTICE) {
+  public function __construct($channel, $messages, $handler) {
     $this->messages = $messages;
 
     $this->logger = new \Monolog\Logger($channel);
-    $this->logger->pushHandler(new SyslogHandler($x, 'local0', $level));
+    $this->logger->pushHandler($handler);
 
     $this->fxlogger = new \Monolog\Logger($channel);
-    $this->fxlogger->pushHandler(new FingersCrossedHandler(new SyslogHandler($x)));
+    $this->fxlogger->pushHandler(new FingersCrossedHandler($handler));
   }
 
   public function debug($message, array $context = Array()) {
