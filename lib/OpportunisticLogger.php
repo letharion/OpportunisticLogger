@@ -26,32 +26,32 @@ class OpportunisticLogger implements LoggerInterface {
     $this->fxlogger->pushHandler(new FingersCrossedHandler($handler));
   }
 
-  public function debug($message, array $context = Array()) {
+  public function debug($message, array $context = array()) {
     $this->log('debug', $message, $context);
   }
-  public function info($message, array $context = Array()) {
+  public function info($message, array $context = array()) {
     $this->log('info', $message, $context);
   }
-  public function notice($message, array $context = Array()) {
+  public function notice($message, array $context = array()) {
     $this->log('notice', $message, $context);
   }
-  public function warning($message, array $context = Array()) {
+  public function warning($message, array $context = array()) {
     $this->log('warning', $message, $context);
   }
-  public function error($message, array $context = Array()) {
+  public function error($message, array $context = array()) {
     $this->log('error', $message, $context);
   }
-  public function critical($message, array $context = Array()) {
+  public function critical($message, array $context = array()) {
     $this->log('critical', $message, $context);
   }
-  public function alert($message, array $context = Array()) {
+  public function alert($message, array $context = array()) {
     $this->log('alert', $message, $context);
   }
-  public function emergency($message, array $context = Array()) {
+  public function emergency($message, array $context = array()) {
     $this->log('emergency', $message, $context);
   }
 
-  public function log($level, $message, array $context = Array()) {
+  public function log($level, $message, array $context = array()) {
     $message_data = $this->messages[$message];
     $message = str_replace(
       array('%uuid', '%message'),
