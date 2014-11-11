@@ -4,11 +4,19 @@ namespace Letharion\Logging;
 
 use Psr\Log\LoggerInterface;
 
+use Monolog\Logger;
 use Monolog\Handler\SyslogHandler;
 use Monolog\Handler\FingersCrossedHandler;
 
 /**
  * Opportunistic class that logs everything in memory
+ *
+ * @param string $channel
+ *   The loggers channel. See monolog.
+ * @param array $messages
+ *   Array of messages and their UUIDs.
+ * @param object $handler
+ *   A monolog handler. Defaults to a Syslog handler if left out.
  */
 class OpportunisticLogger implements LoggerInterface {
 
@@ -16,14 +24,22 @@ class OpportunisticLogger implements LoggerInterface {
   protected $fxlogger;
   protected $messages;
 
-  public function __construct($channel, $messages, $handler) {
+  public function __construct($channel, $messages, $handler = NULL) {
     $this->messages = $messages;
 
-    $this->logger = new \Monolog\Logger($channel);
+    if ($handler === NULL) {
+      $handler = $this->getDefaultHandler();
+    }
+
+    $this->logger = new Logger($channel);
     $this->logger->pushHandler($handler);
 
-    $this->fxlogger = new \Monolog\Logger($channel);
+    $this->fxlogger = new Logger($channel);
     $this->fxlogger->pushHandler(new FingersCrossedHandler($handler));
+  }
+
+  protected function getDefaultHandler() {
+    return new SyslogHandler('default-logger', 'local0', Logger::INFO);
   }
 
   public function debug($message, array $context = array()) {
