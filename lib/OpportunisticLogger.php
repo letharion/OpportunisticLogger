@@ -68,7 +68,7 @@ class OpportunisticLogger implements LoggerInterface {
   }
 
   public function log($level, $message, array $context = array()) {
-    $message_data = $this->messages[$message];
+    $message_data = isset($this->messages[$message]) ? $this->messages[$message] : $message;
     $message = str_replace(
       array('%uuid', '%message'),
       $message_data,
