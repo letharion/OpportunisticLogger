@@ -38,7 +38,15 @@ class OpportunisticLogger implements LoggerInterface {
     $this->fxlogger = new Logger($channel);
     $this->fxlogger->pushHandler(new FingersCrossedHandler($handler));
 
-    $this->instance_hash = md5(uniqid());
+    $this->setInstanceHash(md5(uniqid()));
+  }
+
+  public function getInstanceHash() {
+    return $this->instance_hash;
+  }
+
+  public function setInstanceHash($hash) {
+    $this->instance_hash = $hash;
   }
 
   protected function getDefaultHandler() {
@@ -77,7 +85,7 @@ class OpportunisticLogger implements LoggerInterface {
       $message_data,
       '(%uuid): %message'
     );
-    return 'INSTANCE HASH: ' . $this->instance_hash . ' ' . $message;
+    return 'INSTANCE HASH: ' . $this->getInstanceHash() . ' ' . $message;
   }
 
   public function log($level, $message, array $context = array()) {
